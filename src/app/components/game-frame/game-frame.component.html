@@ -1,0 +1,4 @@
+<section id="game-area">
+  <span (click)="reset()">Player 1 has chosen {{playerIsX ? 'X' : 'O'}} </span>
+  <app-player-select [ngClass]="{'closed': closePlayerSelect}" (playerIsX)="iconPicked($event)"></app-player-select>
+</section>
