@@ -6,8 +6,10 @@ import {GameFrameComponent} from './components/game-frame/game-frame.component';
 import {PlayerSelectComponent} from './components/player-select/player-select.component';
 import {BoardComponent} from './components/board/board.component';
 import {SquareComponent} from './components/square/square.component';
-import {NbButtonComponent, NbButtonModule, NbLayoutModule, NbThemeModule} from '@nebular/theme';
+import {NbButtonModule, NbLayoutModule, NbThemeModule} from '@nebular/theme';
 import {NbEvaIconsModule} from '@nebular/eva-icons';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,10 @@ import {NbEvaIconsModule} from '@nebular/eva-icons';
     NbThemeModule.forRoot({name: 'cosmic '}),
     NbLayoutModule,
     NbEvaIconsModule,
-    NbButtonModule
+    NbButtonModule,
+    BrowserAnimationsModule,
+    NbThemeModule.forRoot({ name: 'cosmic' }),
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
