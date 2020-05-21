@@ -1,16 +1,23 @@
-<h1>Current Player: {{ player }}</h1>
+<button (click)="newGame()">Clear Board</button>
 
-<button (click)="newGame()">New Game</button>
-
-<h2 *ngIf="winner">
-  {{winner}} WINS!!!
-</h2>
+<div id="player-select">
+  <h2 class="player-icon"
+      [ngClass]="{'my-turn': humanPlayer === 'X', 'stop-click': !isBoardEmpty}">
+      X</h2>
+  <h2 class="player-icon"
+      [ngClass]="{'my-turn': humanPlayer === 'O', 'stop-click': !isBoardEmpty}"
+      (click)="onStartGameAI();">O</h2>
+</div>
 
 <main>
   <app-square
-      *ngFor="let value of squares; let i = index"
+      *ngFor="let value of board; index as i"
+      [position]="i"
       [value]="value"
-      (click)="makeMove(i)">
-
+      (click)="makeHumanMove(i);">
   </app-square>
 </main>
+
+<section id="winner" *ngIf="winner">
+  {{winner.text}}
+</section>

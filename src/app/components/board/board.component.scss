@@ -2,16 +2,43 @@ main {
   display: grid;
   grid-template-columns: 10rem 10rem 10rem;
   grid-gap: 0;
-  background-color: black;
-  margin: auto;
   justify-content: center;
 }
 
 app-square {
-  border: .1rem gray solid;
   height: 10rem;
+
+  .disabled {
+    pointer-events: none;
+  }
 }
 
 button {
   background-color: grey;
+}
+
+#player-select {
+  display: flex;
+  justify-content: center;
+
+  .player-icon {
+    padding: 2rem;
+    cursor: pointer;
+  }
+}
+
+#winner {
+  margin-top: 2rem;
+  text-align: center;
+  font-weight: bold;
+}
+
+.my-turn {
+  background-color: lightgrey;
+}
+
+.stop-click {
+  pointer-events: none;
+  cursor: none;
+  visible: false;
 }

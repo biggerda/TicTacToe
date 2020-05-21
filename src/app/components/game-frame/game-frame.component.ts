@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 
+
 @Component({
   selector: 'app-game-frame',
   templateUrl: './game-frame.component.html',
@@ -7,21 +8,13 @@ import {Component, OnInit} from '@angular/core';
 })
 export class GameFrameComponent implements OnInit {
 
-  closePlayerSelect: boolean;
   playerIsX: boolean;
+  gameMode: number;
 
   constructor() {
   }
 
   ngOnInit(): void {
-  }
-
-  iconPicked($event) {
-    this.playerIsX = $event;
-    this.closePlayerSelect = true;
-  }
-
-  reset() {
-    this.closePlayerSelect = false;
+    this.gameMode = 0;
   }
 }

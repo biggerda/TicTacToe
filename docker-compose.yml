@@ -3,7 +3,7 @@ version: '3.7'
 services:
 
   example:
-    container_name: example
+    container_name: tictactoe-docker
     build:
       context: .
       dockerfile: Dockerfile

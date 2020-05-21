@@ -6,8 +6,6 @@ import {Component, Input, OnInit} from '@angular/core';
   styleUrls: ['./square.component.scss']
 })
 export class SquareComponent {
-
     @Input() value: 'X' | 'O';
-
-
+    @Input() position: number;
 }

@@ -1,8 +1,31 @@
-p {
-  font-size: 5rem;
-}
-
-button {
+section {
   height: 10rem;
   width: 10rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color:white;
+  border: .01rem solid black;
+
+  &:hover {
+    cursor: pointer;
+  }
 }
+
+#square0, #square1, #square2 {
+  border-top: none;
+}
+
+#square0, #square3, #square6 {
+  border-left: none;
+}
+
+#square2, #square5, #square8 {
+  border-right: none;
+}
+
+#square6, #square7, #square8 {
+  border-bottom: none;
+}
+
+
