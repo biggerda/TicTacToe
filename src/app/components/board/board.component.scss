@@ -1,44 +1,75 @@
 main {
   display: grid;
-  grid-template-columns: 10rem 10rem 10rem;
+  grid-template-columns: 8rem 8rem 8rem;
   grid-gap: 0;
   justify-content: center;
 }
 
 app-square {
-  height: 10rem;
+  height: 8rem;
 
   .disabled {
     pointer-events: none;
   }
 }
 
-button {
-  background-color: grey;
-}
+#player-selection-area {
+  margin-top: 2rem;
 
-#player-select {
-  display: flex;
-  justify-content: center;
+  #first-move {
+    text-align: center;
+    margin-bottom: 0;
+  }
 
-  .player-icon {
-    padding: 2rem;
-    cursor: pointer;
+  #player-select {
+    display: flex;
+    text-align-last: right;
+
+    .player-icon {
+      padding: .5rem;
+      cursor: pointer;
+      width: 3rem;
+    }
+
+    .my-turn {
+      background-color: rgba(83, 199, 97, 0.36);
+    }
+
+    #human-player-select {
+      flex: 1;
+    }
+
+    #ai-player-select {
+      display: flex;
+      flex: 1;
+    }
   }
 }
 
 #winner {
-  margin-top: 2rem;
+  margin-top: .5rem;
   text-align: center;
   font-weight: bold;
+  color: blue;
 }
 
-.my-turn {
-  background-color: lightgrey;
+
+#reset {
+  padding: .5rem;
+  width: 1rem;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 1rem;
+  background-color: rgba(189, 189, 189, 0.36);
+  text-align: center;
+  cursor: pointer;
 }
 
-.stop-click {
-  pointer-events: none;
-  cursor: none;
-  visible: false;
+#difficulty-selector {
+  display: block;
+  margin: 0 auto;
+  position: relative;
+  right: 9rem;
+  width: 5rem;
 }

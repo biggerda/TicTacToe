@@ -1,1 +1,5 @@
-<section [id]="'square' + position" [ngClass]="value == 'X' ? 'xClass' : 'oClass'">{{value}}</section>
+<section
+  [id]="'square' + position"
+  [ngClass]="{'xClass' : value == 'X', 'oClass' : value == 'O', 'winner-found' : winner?.cells?.includes(position) }">
+  {{value}}
+</section>

@@ -1,22 +1,41 @@
-<button (click)="newGame()">Clear Board</button>
+<select name="chooseLevel" id="difficulty-selector" [(ngModel)]="currentLevel" (ngModelChange)="levelChange(currentLevel)">
+  <option *ngFor="let mode of availableModes" [value]="mode.id">
+    {{mode.level}}
+  </option>
+</select>
 
-<div id="player-select">
-  <h2 class="player-icon"
-      [ngClass]="{'my-turn': humanPlayer === 'X', 'stop-click': !isBoardEmpty}">
-      X</h2>
-  <h2 class="player-icon"
-      [ngClass]="{'my-turn': humanPlayer === 'O', 'stop-click': !isBoardEmpty}"
-      (click)="onStartGameAI();">O</h2>
-</div>
+<img id="reset" (click)="clearBoard()" src="./assets/images/reload.svg"/>
 
 <main>
   <app-square
       *ngFor="let value of board; index as i"
+      [winner]="winner"
       [position]="i"
       [value]="value"
       (click)="makeHumanMove(i);">
   </app-square>
 </main>
+
+<section id="player-selection-area" *ngIf="(isBoardEmpty && displayPlayerSelect) || askPlayAgain">
+  <h3 id="first-move">Who Moves First?</h3>
+  <div id="player-select">
+    <section id="human-player-select">
+      <img class="player-icon x-icon"
+           [ngClass]="{'my-turn': (humanPlayer === 'X' && !askPlayAgain)}"
+           (click)="onSelectHuman()" src="./assets/images/user.svg"/>
+    </section>
+    <section id="ai-player-select">
+      <img class="player-icon o-icon"
+           *ngIf="currentLevel === 1"
+           [ngClass]="{'my-turn': (humanPlayer === 'O' && !askPlayAgain)}"
+           (click)="onStartGameAI()" src="./assets/images/robot.svg"/>
+      <img class="player-icon o-icon"
+           *ngIf="currentLevel === 2"
+           [ngClass]="{'my-turn': (humanPlayer === 'O' && !askPlayAgain)}"
+           (click)="onStartGameAI()" src="./assets/images/einstein.svg"/>
+    </section>
+  </div>
+</section>
 
 <section id="winner" *ngIf="winner">
   {{winner.text}}

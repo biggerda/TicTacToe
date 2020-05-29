@@ -7,11 +7,14 @@ import {Winner} from '../../models/Winner';
   styleUrls: ['./board.component.scss']
 })
 export class BoardComponent implements OnInit {
+  displayPlayerSelect = true;
+  firstMove = true;
   humanPlayer: string;
   aiPlayer: string;
   board: any[];
   winner: Winner;
   isGameOver = true;
+  askPlayAgain = false;
   winningLines = [
     // Horizontal
     [0, 1, 2],
@@ -27,11 +30,24 @@ export class BoardComponent implements OnInit {
     [0, 4, 8],
     [2, 4, 6],
   ];
+  availableModes = [
+    {
+      id: 1,
+      level: 'easy'
+    },
+    {
+      id: 2,
+      level: 'hard'
+    }
+  ];
+  currentLevel: number;
 
   constructor() {
   }
 
   ngOnInit() {
+    console.log(`GAME INITIALIZED`);
+    this.currentLevel = 1;
     this.newGame();
   }
 
@@ -41,6 +57,18 @@ export class BoardComponent implements OnInit {
     this.isGameOver = false;
     this.onStartGameHuman();
   }
+
+  clearBoard() {
+    if (!this.askPlayAgain) {
+      this.board.fill(null);
+      this.onStartGameHuman();
+      this.displayPlayerSelect = true;
+    } else {
+      this.askPlayAgain = false;
+      this.newGame();
+    }
+  }
+
 
   get isBoardEmpty(): boolean {
     return this.board.every(box => box === null);
@@ -55,10 +83,13 @@ export class BoardComponent implements OnInit {
     this.aiPlayer = 'O';
   }
 
-  onStartGameAI() {
-    this.aiPlayer = 'X';
-    this.humanPlayer = 'O';
-    this.makeAIMove();
+  onSelectHuman() {
+    if (!this.askPlayAgain) {
+      this.displayPlayerSelect = false;
+    } else {
+      this.displayPlayerSelect = false;
+      this.clearBoard();
+    }
   }
 
   makeHumanMove(box: number) {
@@ -73,13 +104,66 @@ export class BoardComponent implements OnInit {
     }
   }
 
+  onStartGameAI() {
+    if (!this.askPlayAgain) {
+      this.aiPlayer = 'X';
+      this.humanPlayer = 'O';
+      this.displayPlayerSelect = false;
+      this.makeAIMove();
+    } else {
+      this.newGame();
+      this.aiPlayer = 'X';
+      this.humanPlayer = 'O';
+      this.askPlayAgain = false;
+      this.makeAIMove();
+    }
+  }
+
+
+  isMovesLeft() {
+    if (
+      this.board.filter(value => value === null)
+    ) {
+      return true;
+    }
+    return false;
+  }
+
   makeAIMove() {
-    const index = this.minimax(this.board, 0, this.aiPlayer);
-    this.board[index] = this.aiPlayer;
+
+    switch (this.currentLevel) {
+      case 1: {
+        this.computerMove();
+        break;
+      }
+      case 2: {
+        const index = this.minimax(this.board, 0, this.aiPlayer);
+        this.board[index] = this.aiPlayer;
+        break;
+      }
+    }
+
     const winnerResult = this.calculateWinner(this.board);
 
     if (winnerResult) {
       this.winnerMsg(winnerResult);
+    }
+  }
+
+  computerMove() {
+    const aiChoices = [4, 0, 8, 6, 2, 1, 3, 5];
+
+    for (const index of aiChoices) {
+      if (!this.board[index]) {
+        this.board[index] = this.aiPlayer;
+
+        const winnerResult = this.calculateWinner(this.board);
+
+        if (winnerResult) {
+          this.winnerMsg(winnerResult);
+        }
+        break;
+      }
     }
   }
 
@@ -146,6 +230,7 @@ export class BoardComponent implements OnInit {
 
   winnerMsg(winner) {
     this.isGameOver = true;
+    this.askPlayAgain = true;
     this.winner = winner;
 
     switch (winner.winner) {
@@ -159,5 +244,10 @@ export class BoardComponent implements OnInit {
         this.winner.text = 'You won!';
         break;
     }
+  }
+
+  levelChange(currLevel: number) {
+    this.currentLevel = +currLevel;
+    this.newGame();
   }
 }

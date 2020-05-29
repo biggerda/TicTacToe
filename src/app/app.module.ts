@@ -7,6 +7,7 @@ import {BoardComponent} from './components/board/board.component';
 import {SquareComponent} from './components/square/square.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
+import {FormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -15,11 +16,12 @@ import { AppRoutingModule } from './app-routing.module';
     BoardComponent,
     SquareComponent
   ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    AppRoutingModule
-  ],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        AppRoutingModule,
+        FormsModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

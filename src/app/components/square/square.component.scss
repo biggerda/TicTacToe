@@ -1,11 +1,13 @@
 section {
-  height: 10rem;
-  width: 10rem;
+  height: 8rem;
+  width: 8rem;
   display: flex;
   justify-content: center;
   align-items: center;
   background-color:white;
-  border: .01rem solid black;
+  border: .2rem solid black;
+  font-size: 4rem;
+  font-family: Verdana;
 
   &:hover {
     cursor: pointer;
@@ -26,6 +28,10 @@ section {
 
 #square6, #square7, #square8 {
   border-bottom: none;
+}
+
+.winner-found {
+  color: blue;
 }
 
 
