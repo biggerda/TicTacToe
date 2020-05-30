@@ -10,4 +10,5 @@ export class SquareComponent {
     @Input() value: 'X' | 'O';
     @Input() position: number;
     @Input() winner: Winner;
+    @Input() drawGame: boolean;
 }

@@ -1,5 +1,9 @@
 <section
   [id]="'square' + position"
-  [ngClass]="{'xClass' : value == 'X', 'oClass' : value == 'O', 'winner-found' : winner?.cells?.includes(position) }">
-  {{value}}
+  [ngClass]="{
+    'xClass' : value == 'X',
+    'oClass' : value == 'O',
+    'winner-found' : winner?.cells?.includes(position),
+    'draw-game' : drawGame }">
+    {{value}}
 </section>

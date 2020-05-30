@@ -31,7 +31,39 @@ section {
 }
 
 .winner-found {
-  color: blue;
+  animation: pulse 500ms forwards;
+}
+
+.draw-game {
+  animation: draw-pulse 500ms forwards;
 }
 
 
+@keyframes pulse {
+  25% {
+    color: gold;
+  }
+
+  50% {
+    color: white;
+  }
+
+  100% {
+    color: gold;
+  }
+}
+
+
+@keyframes draw-pulse {
+  25% {
+    color: grey;
+  }
+
+  50% {
+    color: white;
+  }
+
+  100% {
+    color: lightgrey;
+  }
+}

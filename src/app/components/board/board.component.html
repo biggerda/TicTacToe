@@ -10,6 +10,7 @@
   <app-square
       *ngFor="let value of board; index as i"
       [winner]="winner"
+      [drawGame]="drawGame"
       [position]="i"
       [value]="value"
       (click)="makeHumanMove(i);">
@@ -22,7 +23,7 @@
     <section id="human-player-select">
       <img class="player-icon x-icon"
            [ngClass]="{'my-turn': (humanPlayer === 'X' && !askPlayAgain)}"
-           (click)="onSelectHuman()" src="./assets/images/user.svg"/>
+           (click)="onSelectHuman()" src="./assets/images/brain.svg"/>
     </section>
     <section id="ai-player-select">
       <img class="player-icon o-icon"

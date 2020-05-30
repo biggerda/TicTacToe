@@ -13,6 +13,7 @@ export class BoardComponent implements OnInit {
   aiPlayer: string;
   board: any[];
   winner: Winner;
+  drawGame: boolean;
   isGameOver = true;
   askPlayAgain = false;
   winningLines = [
@@ -54,6 +55,7 @@ export class BoardComponent implements OnInit {
   newGame() {
     this.board = Array(9).fill(null);
     this.winner = null;
+    this.drawGame = false;
     this.isGameOver = false;
     this.onStartGameHuman();
   }
@@ -94,6 +96,7 @@ export class BoardComponent implements OnInit {
 
   makeHumanMove(box: number) {
     if (this.isGameOver) {
+      this.newGame();
       return;
     }
 
@@ -120,13 +123,17 @@ export class BoardComponent implements OnInit {
   }
 
 
-  isMovesLeft() {
-    if (
-      this.board.filter(value => value === null)
-    ) {
-      return true;
-    }
-    return false;
+  movesLeft() {
+    const newBoard: number[] = [];
+
+    this.board.filter((value, index) => {
+      if (value === null) {
+        newBoard.push(index);
+      }
+      return value === null;
+    });
+
+    return newBoard;
   }
 
   makeAIMove() {
@@ -151,18 +158,16 @@ export class BoardComponent implements OnInit {
   }
 
   computerMove() {
-    const aiChoices = [4, 0, 8, 6, 2, 1, 3, 5];
+    const aiChoices = this.movesLeft();
+    const randomBox = aiChoices[Math.floor(Math.random() * aiChoices.length)];
 
-    for (const index of aiChoices) {
-      if (!this.board[index]) {
-        this.board[index] = this.aiPlayer;
+    if (!this.board[randomBox]) {
+      this.board[randomBox] = this.aiPlayer;
 
-        const winnerResult = this.calculateWinner(this.board);
+      const winnerResult = this.calculateWinner(this.board);
 
-        if (winnerResult) {
-          this.winnerMsg(winnerResult);
-        }
-        break;
+      if (winnerResult) {
+        this.winnerMsg(winnerResult);
       }
     }
   }
@@ -235,6 +240,7 @@ export class BoardComponent implements OnInit {
 
     switch (winner.winner) {
       case 'draw':
+        this.drawGame = true;
         this.winner.text = 'It is a draw!';
         break;
       case this.aiPlayer:
