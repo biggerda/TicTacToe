@@ -8,7 +8,6 @@ import {Winner} from '../../models/Winner';
 })
 export class BoardComponent implements OnInit {
   displayPlayerSelect = true;
-  firstMove = true;
   humanPlayer: string;
   aiPlayer: string;
   board: any[];
@@ -100,6 +99,11 @@ export class BoardComponent implements OnInit {
       return;
     }
 
+    if (this.askPlayAgain || this.displayPlayerSelect) {
+      this.askPlayAgain = false;
+      this.displayPlayerSelect = false;
+    }
+
     if (this.board[box] === null) {
       this.board[box] = this.humanPlayer;
       const winnerResult = this.calculateWinner(this.board);
@@ -159,10 +163,10 @@ export class BoardComponent implements OnInit {
 
   computerMove() {
     const aiChoices = this.movesLeft();
-    const randomBox = aiChoices[Math.floor(Math.random() * aiChoices.length)];
+    const randomSquare = aiChoices[Math.floor(Math.random() * aiChoices.length)];
 
-    if (!this.board[randomBox]) {
-      this.board[randomBox] = this.aiPlayer;
+    if (!this.board[randomSquare]) {
+      this.board[randomSquare] = this.aiPlayer;
 
       const winnerResult = this.calculateWinner(this.board);
 
@@ -224,7 +228,14 @@ export class BoardComponent implements OnInit {
         currentBoard[a] === currentBoard[b] &&
         currentBoard[a] === currentBoard[c]
       ) {
-        return {winner: currentBoard[a], cells: [a, b, c]};
+        const loserBoard: number[] = [];
+
+        currentBoard.forEach((cell, index) => {
+          if ((index !== a) && (index !== b) && (index !== c))
+            loserBoard.push(index);
+        });
+
+        return {winner: currentBoard[a], cells: [a, b, c], loserCells: loserBoard};
       }
     }
 
@@ -241,13 +252,13 @@ export class BoardComponent implements OnInit {
     switch (winner.winner) {
       case 'draw':
         this.drawGame = true;
-        this.winner.text = 'It is a draw!';
+        this.winner.text = 'DRAW GAME!';
         break;
       case this.aiPlayer:
-        this.winner.text = 'You lost!';
+        this.winner.text = this.aiPlayer + ' WINS';
         break;
       case this.humanPlayer:
-        this.winner.text = 'You won!';
+        this.winner.text = this.humanPlayer + ' WINS';
         break;
     }
   }

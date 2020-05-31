@@ -4,7 +4,10 @@
   </option>
 </select>
 
-<img id="reset" (click)="clearBoard()" src="./assets/images/reload.svg"/>
+<button id="reset" (click)="clearBoard()">
+  <img src="./assets/images/reload.svg"/>
+  <span>Reset</span>
+</button>
 
 <main>
   <app-square

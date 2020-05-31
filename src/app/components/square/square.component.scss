@@ -5,9 +5,20 @@ section {
   justify-content: center;
   align-items: center;
   background-color:white;
-  border: .2rem solid black;
+  border: .2rem solid var(--transparent-blue);
   font-size: 4rem;
   font-family: Verdana;
+  color: var(--transparent-blue);
+
+  --transparent-blue: rgba(45, 64, 87, 0.85);
+  --transparent-purple: rgba(59, 47, 94, 0.75);
+  --winner-color-1: #332851;
+  --winner-color-2: #9AE1E2;
+  --winner-color-3: #F6C667;
+  --loser-color-1: lightgrey;
+  --loser-color-2: darkgrey;
+  --loser-color-3: rgba(45, 64, 87, 0.4);
+  --transparent: rgba(255, 255, 255, 50);
 
   &:hover {
     cursor: pointer;
@@ -31,39 +42,69 @@ section {
 }
 
 .winner-found {
-  animation: pulse 500ms forwards;
+  animation: winner-pulse 1s forwards;
+}
+
+.loser-found {
+  animation: loser-pulse 1s forwards;
 }
 
 .draw-game {
-  animation: draw-pulse 500ms forwards;
+  animation: draw-pulse 1s forwards;
 }
 
 
-@keyframes pulse {
-  25% {
-    color: gold;
+@keyframes winner-pulse {
+  0% {
+    color: var(--winner-color-1);
   }
 
   50% {
-    color: white;
+    color: var(--winner-color-2);
   }
 
   100% {
-    color: gold;
+    color: var(--winner-color-3);
   }
 }
 
+@keyframes loser-pulse {
+  25% {
+    color: var(--loser-color-1);
+  }
+
+  50% {
+    color: var(--loser-color-2);
+  }
+
+  100% {
+    color: var(--loser-color-3);
+  }
+}
 
 @keyframes draw-pulse {
-  25% {
-    color: grey;
+  0% {
+    color: var(--loser-color-1);
+    border-color: var(--loser-color-1);
+  }
+
+  20% {
+    color: var(--transparent);
+    border-color: var(--transparent);
   }
 
   50% {
-    color: white;
+    color: var(--loser-color-2);
+    border-color: var(--loser-color-2);
+  }
+
+  70% {
+    color: var(--transparent);
+    border-color: var(--transparent);
   }
 
   100% {
-    color: lightgrey;
+    color: var(--loser-color-3);
+    border-color: var(--loser-color-3);
   }
 }

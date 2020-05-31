@@ -4,6 +4,7 @@
     'xClass' : value == 'X',
     'oClass' : value == 'O',
     'winner-found' : winner?.cells?.includes(position),
+    'loser-found' : winner?.loserCells?.includes(position),
     'draw-game' : drawGame }">
     {{value}}
 </section>
