@@ -38,6 +38,10 @@ export class BoardComponent implements OnInit {
     {
       id: 2,
       level: 'hard'
+    },
+    {
+      id: 3,
+      level: '2-Player'
     }
   ];
   currentLevel: number;
@@ -91,6 +95,12 @@ export class BoardComponent implements OnInit {
       this.displayPlayerSelect = false;
       this.clearBoard();
     }
+  }
+
+  switchPlayer() {
+    const temp = this.humanPlayer;
+    this.humanPlayer = this.aiPlayer;
+    this.aiPlayer = temp;
   }
 
   makeHumanMove(box: number) {
@@ -150,6 +160,10 @@ export class BoardComponent implements OnInit {
       case 2: {
         const index = this.minimax(this.board, 0, this.aiPlayer);
         this.board[index] = this.aiPlayer;
+        break;
+      }
+      case 3: {
+        this.switchPlayer();
         break;
       }
     }
@@ -231,8 +245,9 @@ export class BoardComponent implements OnInit {
         const loserBoard: number[] = [];
 
         currentBoard.forEach((cell, index) => {
-          if ((index !== a) && (index !== b) && (index !== c))
+          if ((index !== a) && (index !== b) && (index !== c)) {
             loserBoard.push(index);
+          }
         });
 
         return {winner: currentBoard[a], cells: [a, b, c], loserCells: loserBoard};

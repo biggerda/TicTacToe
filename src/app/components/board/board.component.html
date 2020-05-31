@@ -20,8 +20,8 @@
   </app-square>
 </main>
 
-<section id="player-selection-area" *ngIf="(isBoardEmpty && displayPlayerSelect) || askPlayAgain">
-  <h3 id="first-move">Who Moves First?</h3>
+<section id="player-selection-area" *ngIf="(isBoardEmpty && displayPlayerSelect) || askPlayAgain || currentLevel === 3">
+  <h3 id="first-move" [ngClass]="{ invisible: (currentLevel === 3) && !isBoardEmpty  }">Who Moves First?</h3>
   <div id="player-select">
     <section id="human-player-select">
       <img class="player-icon x-icon"
@@ -37,6 +37,10 @@
            *ngIf="currentLevel === 2"
            [ngClass]="{'my-turn': (humanPlayer === 'O' && !askPlayAgain)}"
            (click)="onStartGameAI()" src="./assets/images/einstein.svg"/>
+      <img class="player-icon o-icon"
+           *ngIf="currentLevel === 3"
+           [ngClass]="{'my-turn': (humanPlayer === 'O' && !askPlayAgain)}"
+           (click)="switchPlayer()" src="./assets/images/brain-opp.svg"/>
     </section>
   </div>
 </section>

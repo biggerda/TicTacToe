@@ -23,6 +23,10 @@ app-square {
     font-family: "Roboto Light";
   }
 
+  .invisible {
+    visibility: hidden;
+  }
+
   #player-select {
     display: flex;
     text-align-last: right;
