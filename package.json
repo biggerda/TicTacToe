@@ -25,6 +25,7 @@
     "@angular/router": "^9.1.9",
     "eva-icons": "^1.1.2",
     "rxjs": "~6.5.4",
+    "ts-node": "~8.3.0",
     "tslib": "^1.13.0",
     "zone.js": "~0.10.2"
   },
@@ -45,7 +46,6 @@
     "karma-jasmine-html-reporter": "^1.5.4",
     "protractor": "~5.4.3",
     "ts-node": "~8.3.0",
-    "tslint": "~6.1.0",
-    "typescript": "~3.8.3"
+    "tslint": "~6.1.0"
   }
 }
