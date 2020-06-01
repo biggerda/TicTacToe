@@ -13,6 +13,24 @@ app-square {
   }
 }
 
+#blocker-style {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 25rem;
+  height: 40rem;
+  z-index: -1;
+  background: transparent;
+}
+
+.block-board {
+  z-index: 1 !important;
+}
+
+.not-clickable {
+  pointer-events: none;
+}
+
 #player-selection-area {
   margin-top: 2rem;
 
@@ -29,7 +47,6 @@ app-square {
 
   #player-select {
     display: flex;
-    text-align-last: right;
 
     .player-icon {
       margin-top: .5rem;
@@ -39,16 +56,45 @@ app-square {
     }
 
     .my-turn {
+      background-color: rgba(66, 118, 208, 0.5);
+      border-radius: 15%;
+    }
+
+    .my-turn-2 {
       background-color: rgba(154, 225, 226, 0.5);
+      width: 4rem;
+      border-radius: 15%;
+    }
+
+    .winning-icon {
+      background-color: rgba(248, 201, 36, 0.5);
+      animation: wiggle 1s forwards;
+    }
+
+    .not-a-win {
+      background: transparent !important;
     }
 
     #human-player-select {
       flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      width: 5rem;
     }
 
     #ai-player-select {
-      display: flex;
       flex: 1;
+      display: flex;
+      flex-direction: column;
+      width: 5rem;
+    }
+
+    .score {
+      font-family: "Roboto Light";
+      margin-top: .3rem;
+      width: 5rem;
+      text-align: center;
     }
   }
 }
@@ -108,4 +154,37 @@ app-square {
   position: relative;
   right: 9rem;
   width: 5rem;
+}
+
+@keyframes wiggle {
+  15%
+  {
+    -webkit-transform: translateX(5px);
+    transform: translateX(5px);
+  }
+  30%
+  {
+    -webkit-transform: translateX(-5px);
+    transform: translateX(-5px);
+  }
+  50%
+  {
+    -webkit-transform: translateX(3px);
+    transform: translateX(3px);
+  }
+  65%
+  {
+    -webkit-transform: translateX(-3px);
+    transform: translateX(-3px);
+  }
+  80%
+  {
+    -webkit-transform: translateX(2px);
+    transform: translateX(2px);
+  }
+  100%
+  {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
 }

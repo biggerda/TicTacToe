@@ -1,8 +1,8 @@
 <section
   [id]="'square' + position"
   [ngClass]="{
-    'xClass' : value == 'X',
-    'oClass' : value == 'O',
+    'x-class' : value == 'X',
+    'o-class' : value == 'O',
     'winner-found' : winner?.cells?.includes(position),
     'loser-found' : winner?.loserCells?.includes(position),
     'draw-game' : drawGame }">

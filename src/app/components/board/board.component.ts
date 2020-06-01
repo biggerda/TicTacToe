@@ -1,5 +1,7 @@
 import {Component, OnInit, Input} from '@angular/core';
 import {Winner} from '../../models/Winner';
+import {timeout} from 'rxjs/operators';
+import set = Reflect.set;
 
 @Component({
   selector: 'app-board',
@@ -10,11 +12,18 @@ export class BoardComponent implements OnInit {
   displayPlayerSelect = true;
   humanPlayer: string;
   aiPlayer: string;
+  curPlayer: string;
+  winningPlayer: string;
   board: any[];
+  humanScoreVsComp: number;
+  aiScoreVsHuman: number;
+  player1Score: number;
+  player2Score: number;
   winner: Winner;
   drawGame: boolean;
   isGameOver = true;
   askPlayAgain = false;
+  canClick = true;
   winningLines = [
     // Horizontal
     [0, 1, 2],
@@ -50,23 +59,32 @@ export class BoardComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(`GAME INITIALIZED`);
+    this.resetScores();
     this.currentLevel = 1;
     this.newGame();
+  }
+
+  resetScores() {
+    this.humanScoreVsComp = 0;
+    this.aiScoreVsHuman = 0;
+    this.player1Score = 0;
+    this.player2Score = 0;
   }
 
   newGame() {
     this.board = Array(9).fill(null);
     this.winner = null;
+    this.winningPlayer = null;
     this.drawGame = false;
     this.isGameOver = false;
-    this.onStartGameHuman();
+    if (this.currentLevel !== 3 ) {
+      this.onStartGameHuman();
+    }
   }
 
   clearBoard() {
     if (!this.askPlayAgain) {
       this.board.fill(null);
-      this.onStartGameHuman();
       this.displayPlayerSelect = true;
     } else {
       this.askPlayAgain = false;
@@ -79,16 +97,29 @@ export class BoardComponent implements OnInit {
     return this.board.every(box => box === null);
   }
 
-  get randomChoice(): number {
-    return Math.floor(Math.random() * 9);
+  get currentPlayer(): string {
+    return this.curPlayer;
   }
 
   onStartGameHuman() {
     this.humanPlayer = 'X';
     this.aiPlayer = 'O';
+    this.curPlayer = this.humanPlayer;
   }
 
-  onSelectHuman() {
+  onStartGameHuman2() {
+    this.humanPlayer = 'O';
+    this.aiPlayer = 'X';
+    this.curPlayer = this.humanPlayer;
+  }
+
+  onSelectHuman(selection: number) {
+    if (selection === 1) {
+      this.onStartGameHuman();
+    } else {
+      this.onStartGameHuman2();
+    }
+
     if (!this.askPlayAgain) {
       this.displayPlayerSelect = false;
     } else {
@@ -101,6 +132,7 @@ export class BoardComponent implements OnInit {
     const temp = this.humanPlayer;
     this.humanPlayer = this.aiPlayer;
     this.aiPlayer = temp;
+    this.curPlayer = this.humanPlayer;
   }
 
   makeHumanMove(box: number) {
@@ -116,8 +148,9 @@ export class BoardComponent implements OnInit {
 
     if (this.board[box] === null) {
       this.board[box] = this.humanPlayer;
+      this.curPlayer = this.aiPlayer;
       const winnerResult = this.calculateWinner(this.board);
-      winnerResult ? this.winnerMsg(winnerResult) : this.makeAIMove();
+      winnerResult ? this.winnerMsg(winnerResult) : this.makeComputerMove();
     }
   }
 
@@ -126,13 +159,13 @@ export class BoardComponent implements OnInit {
       this.aiPlayer = 'X';
       this.humanPlayer = 'O';
       this.displayPlayerSelect = false;
-      this.makeAIMove();
+      this.makeComputerMove();
     } else {
       this.newGame();
       this.aiPlayer = 'X';
       this.humanPlayer = 'O';
       this.askPlayAgain = false;
-      this.makeAIMove();
+      this.makeComputerMove();
     }
   }
 
@@ -150,28 +183,38 @@ export class BoardComponent implements OnInit {
     return newBoard;
   }
 
-  makeAIMove() {
+  makeComputerMove() {
+    this.canClick = false;
+
 
     switch (this.currentLevel) {
       case 1: {
-        this.computerMove();
+        setTimeout(() => {
+          this.computerMove();
+          this.canClick = true;
+          this.curPlayer = this.humanPlayer;
+        }, 750);
         break;
       }
       case 2: {
-        const index = this.minimax(this.board, 0, this.aiPlayer);
-        this.board[index] = this.aiPlayer;
+        setTimeout(() => {
+          this.makeAIMove();
+          this.canClick = true;
+          this.curPlayer = this.humanPlayer;
+        }, 500);
         break;
       }
       case 3: {
         this.switchPlayer();
+        this.canClick = true;
+        this.curPlayer = this.humanPlayer;
+        const winnerResult = this.calculateWinner(this.board);
+
+        if (winnerResult) {
+          this.winnerMsg(winnerResult);
+        }
         break;
       }
-    }
-
-    const winnerResult = this.calculateWinner(this.board);
-
-    if (winnerResult) {
-      this.winnerMsg(winnerResult);
     }
   }
 
@@ -187,6 +230,16 @@ export class BoardComponent implements OnInit {
       if (winnerResult) {
         this.winnerMsg(winnerResult);
       }
+    }
+  }
+
+  makeAIMove() {
+    const index = this.minimax(this.board, 0, this.aiPlayer);
+    this.board[index] = this.aiPlayer;
+
+    const winnerResult = this.calculateWinner(this.board);
+    if (winnerResult) {
+      this.winnerMsg(winnerResult);
     }
   }
 
@@ -263,6 +316,7 @@ export class BoardComponent implements OnInit {
     this.isGameOver = true;
     this.askPlayAgain = true;
     this.winner = winner;
+    this.winningPlayer = winner.winner;
 
     switch (winner.winner) {
       case 'draw':
@@ -270,9 +324,19 @@ export class BoardComponent implements OnInit {
         this.winner.text = 'DRAW GAME!';
         break;
       case this.aiPlayer:
+        if (this.currentLevel === 1 || this.currentLevel === 2) {
+          this.aiScoreVsHuman = this.aiScoreVsHuman + 1;
+        } else if (this.currentLevel === 3) {
+          this.player2Score = this.player2Score + 1;
+        }
         this.winner.text = this.aiPlayer + ' WINS';
         break;
       case this.humanPlayer:
+        if (this.currentLevel === 1 || this.currentLevel === 2) {
+          this.humanScoreVsComp = this.humanScoreVsComp + 1;
+        } else if (this.currentLevel === 3) {
+          this.player1Score = this.player1Score + 1;
+        }
         this.winner.text = this.humanPlayer + ' WINS';
         break;
     }
