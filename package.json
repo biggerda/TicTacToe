@@ -1,13 +1,20 @@
 {
   "name": "tictactoe",
   "version": "0.0.0",
+  "engines": {
+    "node": "8.4.0",
+    "npm": "5.6.0"
+  },
   "scripts": {
     "ng": "ng",
+    "server": "node server.js",
     "start": "ng serve",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "preinstall": "npm install -g @angular/cli typescript",
+    "postinstall": "ng build"
   },
   "private": true,
   "dependencies": {
@@ -24,6 +31,7 @@
     "@angular/platform-browser-dynamic": "^9.1.9",
     "@angular/router": "^9.1.9",
     "eva-icons": "^1.1.2",
+    "express": "^4.17.1",
     "rxjs": "~6.5.4",
     "ts-node": "~8.3.0",
     "tslib": "^1.13.0",
