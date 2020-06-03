@@ -21,6 +21,7 @@ export class BoardComponent implements OnInit {
   drawGame: boolean;
   isGameOver = true;
   askPlayAgain = false;
+  firstMove: boolean;
   canClick = true;
   winningLines = [
     // Horizontal
@@ -75,7 +76,8 @@ export class BoardComponent implements OnInit {
     this.winningPlayer = null;
     this.drawGame = false;
     this.isGameOver = false;
-    if (this.currentLevel !== 3 ) {
+    this.firstMove = true;
+    if (this.currentLevel !== 3) {
       this.onStartGameHuman();
     }
   }
@@ -124,6 +126,8 @@ export class BoardComponent implements OnInit {
       this.displayPlayerSelect = false;
       this.clearBoard();
     }
+
+    this.firstMove = false;
   }
 
   switchPlayer() {
@@ -232,7 +236,14 @@ export class BoardComponent implements OnInit {
   }
 
   makeAIMove() {
-    const index = this.minimax(this.board, 0, this.aiPlayer);
+    let index;
+
+    if (this.firstMove) {
+      index = Math.floor(Math.random() * 9);
+      this.firstMove = false;
+    } else {
+      index = this.minimax(this.board, 0, this.aiPlayer);
+    }
     this.board[index] = this.aiPlayer;
 
     const winnerResult = this.calculateWinner(this.board);
