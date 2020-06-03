@@ -1,19 +1,13 @@
-# README
+# MULTI MODE TIC-TAC-TOE README
 
-This is a sample Angular/Node app that can be deployed to a Heroku environment.
+This is a multi-mode, Tic Tac Toe application designed with Angular frontend and NodeJS backend.
 
-Here's how to do that:
+Choose one of the following three modes:
+* Easy: Opponent choose random box for each turn.
+* Hard (or Einstein Mode): Opponent is unbeatable. Utilizes the minimax 
+algorithm, which allows the computer to look-ahead and analyze the best possible
+outcome.
+* 2 Player: Play with a person sitting next to you on the computer.
 
-* Make sure you have a Heroku account
-
-* Fork this repo to your own github account
-
-* Login to the Heroku dashboard and create a new app
-
-* On the deploy tab, select the GitHub option as your deployment method
-
-* Select your forked github repo and connect it
-
-* Enable automatic deployments
-
-* Finally manually deploy as your first deployment.  Check the Overview or Activity tabs to make sure it deployed ok.
+Future Implementation:
+* Game room using socket 
