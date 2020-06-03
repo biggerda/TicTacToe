@@ -1,7 +1,0 @@
-{
-  "name": "Tic Tac Toe",
-  "description": "Multi Mode Tic Tac Toe",
-  "repository": "https://github.com/biggerda/TicTacToe/master",
-  "keywords": ["tictactoe", "game", "ai"],
-  "image": "heroku/nodejs"
-}
