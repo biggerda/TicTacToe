@@ -34,15 +34,17 @@
     <section id="human-player-select">
       <img class="player-icon x-icon"
            [ngClass]="{
-            'my-turn': (currentPlayer === this.humanPlayer && !winner && currentLevel !== 3) ||
-              (currentPlayer === 'X' && !winner && currentLevel === 3),
             'winning-icon': (winningPlayer === this.humanPlayer),
             'not-a-win': (currentLevel === 3 && winningPlayer === 'O')
             }"
            (click)="onSelectHuman(1)" src="./assets/images/brain.svg"/>
 
       <section class="score" *ngIf="currentLevel === 1 || currentLevel === 2">
-          <section class="player-dot">{{humanPlayer}}</section>
+        <section class="player-dot"
+           [ngClass]="{
+            'my-turn': (currentPlayer === this.humanPlayer && !winner && currentLevel !== 3) ||
+              (currentPlayer === 'X' && !winner && currentLevel === 3)}">
+          {{humanPlayer}}</section>
         <span style="text-decoration: underline">Score</span>
         <br>
         {{humanScoreVsComp}}
@@ -59,28 +61,29 @@
     <section id="ai-player-select">
       <img class="player-icon o-icon" *ngIf="currentLevel === 1"
            [ngClass]="{
-            'my-turn-2': (currentPlayer === aiPlayer && !winner),
             'winning-icon': (winningPlayer === aiPlayer),
             'not-clickable': (!isBoardEmpty && !winningPlayer)
             }"
            (click)="onStartGameAI()" src="./assets/images/robot.svg"/>
       <img class="player-icon o-icon" *ngIf="currentLevel === 2"
            [ngClass]="{
-            'my-turn-2': (currentPlayer === aiPlayer && !winner),
             'winning-icon': (winningPlayer === aiPlayer),
             'not-clickable': (!isBoardEmpty && !winningPlayer)
             }"
            (click)="onStartGameAI()" src="./assets/images/einstein.svg"/>
       <img class="player-icon o-icon" *ngIf="currentLevel === 3"
            [ngClass]="{
-            'my-turn-2': (currentPlayer === 'O' && !winner),
             'winning-icon': (winningPlayer === 'O'),
             'not-clickable': (!isBoardEmpty && !winningPlayer)
             }"
            (click)="onSelectHuman(2)" src="./assets/images/brain-opp.svg"/>
 
       <section class="score" *ngIf="currentLevel === 1 || currentLevel === 2">
-        <section class="player-dot">{{aiPlayer}}</section>
+        <section class="player-dot"
+                 [ngClass]="{
+            'my-turn': (currentPlayer === this.aiPlayer && !winner && currentLevel !== 3) ||
+              (currentPlayer === 'O' && !winner && currentLevel === 3)}">
+          {{aiPlayer}}</section>
         <span style="text-decoration: underline">Score</span>
         <br>
         {{aiScoreVsHuman}}

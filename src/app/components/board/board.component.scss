@@ -96,17 +96,7 @@ app-square {
       width: 4rem;
       border: 1px solid black;
       border-radius: 15%;
-    }
-
-    .my-turn {
       background-color: rgba(66, 118, 208, 0.5);
-      border-radius: 15%;
-    }
-
-    .my-turn-2 {
-      background-color: rgba(154, 225, 226, 0.5);
-      width: 4rem;
-      border-radius: 15%;
     }
 
     .winning-icon {
@@ -152,6 +142,11 @@ app-square {
       margin: 0 auto;
       font-size: 1.5rem;
     }
+
+    .my-turn {
+      background-color: #ffb700;
+    }
+
   }
 }
 
