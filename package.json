@@ -5,6 +5,7 @@
   "scripts": {
     "ng": "ng",
     "start": "node server.js",
+    "start:frontend": "ng serve",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
@@ -23,7 +24,6 @@
     "@angular/platform-browser": "^4.4.7",
     "@angular/platform-browser-dynamic": "^4.4.7",
     "@angular/router": "^4.4.7",
-    "bootstrap": "^4.5.0",
     "core-js": "^2.6.11",
     "express": "^4.17.1",
     "express-http-proxy": "^0.10.1",

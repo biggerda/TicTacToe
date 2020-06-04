@@ -1,12 +1,38 @@
+#top-panel {
+  display: flex;
+  margin: 0 auto 1rem;
+  width: 32rem;
+  justify-content: space-around;
+
+  #difficulty-selector {
+  }
+
+  #reset {
+    display: flex;
+    background-color: rgba(42, 116, 199, 0.65);
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    height: 2.2rem;
+    width: 2.2rem;
+    border-radius: 50%;
+
+    img {
+      width: 1rem;
+    }
+  }
+}
+
 main {
   display: grid;
-  grid-template-columns: 8rem 8rem 8rem;
+  grid-template-columns: 7rem 7rem 7rem;
   grid-gap: 0;
   justify-content: center;
+  position: relative;
 }
 
 app-square {
-  height: 8rem;
+  height: 7rem;
 
   .disabled {
     pointer-events: none;
@@ -32,13 +58,28 @@ app-square {
 }
 
 #player-selection-area {
-  margin-top: 2rem;
+  margin: 0 auto 1rem;
+  width: 20rem;
 
   #first-move {
     text-align: center;
     margin-bottom: 0;
     color: #2D4057;
     font-family: "Roboto Light";
+    font-size: 1.5rem;
+  }
+
+  #winner {
+    text-align: center;
+    margin-bottom: 0;
+    font-family: "Roboto Light";
+    font-size: 1.5rem;
+
+    --winner-msg-color-1: #332851;
+    --winner-msg-color-2: #F6C667;
+
+
+    animation: winner-msg-animation 2s forwards .2s;
   }
 
   .invisible {
@@ -53,6 +94,8 @@ app-square {
       padding: .5rem;
       cursor: pointer;
       width: 4rem;
+      border: 1px solid black;
+      border-radius: 15%;
     }
 
     .my-turn {
@@ -78,82 +121,49 @@ app-square {
     #human-player-select {
       flex: 1;
       display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      width: 5rem;
     }
+
 
     #ai-player-select {
       flex: 1;
       display: flex;
-      flex-direction: column;
-      width: 5rem;
+      flex-direction: row-reverse;
+      align-items: flex-end;
+      position: relative;
     }
+
 
     .score {
       font-family: "Roboto Light";
-      margin-top: .3rem;
-      width: 5rem;
+      margin: .3rem .8rem;
       text-align: center;
+      align-self: center;
+    }
+
+    .player-dot {
+      background: rgba(0, 94, 255, 0.18);
+      border-radius: 50%;
+      height: 2.1rem;
+      width: 2.1rem;
+      line-height: 2.1rem;
+      text-align: center;
+      bottom: 1rem;
+      right: -.5rem;
+      margin: 0 auto;
+      font-size: 1.5rem;
     }
   }
 }
 
-#winner {
-  margin-top: .5rem;
-  text-align: center;
-
-  --winner-msg-color-1: #332851;
-  --winner-msg-color-2: #F6C667;
-
-
-  animation: winner-msg-animation 2s forwards;
-}
 
 @keyframes winner-msg-animation {
   0% {
-    font-size: 1rem;
     color: var(--winner-msg-color-1);
   }
 
   100% {
-    font-size: 2rem;
     color: var(--winner-msg-color-2);
   }
-}
-
-
-#reset {
-  display: flex;
-  padding: .5rem;
-  margin: 1rem auto;
-  width: 5rem;
-  background-color: rgba(51, 40, 81, 0.1);
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-
-  img {
-    width: 1rem;
-  }
-
-  span{
-    padding-left: .3rem;
-    font-family: "Roboto Light";
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: #2D4057;
-    position: relative;
-    bottom: 1px;
-  }
-}
-
-#difficulty-selector {
-  display: block;
-  margin: 0 auto;
-  position: relative;
-  right: 9rem;
-  width: 5rem;
 }
 
 @keyframes wiggle {

@@ -17,10 +17,10 @@ import {FormsModule} from '@angular/forms';
     SquareComponent
   ],
     imports: [
-        BrowserModule,
-        BrowserAnimationsModule,
-        AppRoutingModule,
-        FormsModule
+      BrowserModule,
+      BrowserAnimationsModule,
+      AppRoutingModule,
+      FormsModule
     ],
   providers: [],
   bootstrap: [AppComponent]
