@@ -121,8 +121,8 @@ app-square {
     #human-player-select {
       flex: 1;
       display: flex;
+      align-items: flex-start;
     }
-
 
     #ai-player-select {
       flex: 1;
