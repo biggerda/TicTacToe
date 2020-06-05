@@ -3,36 +3,51 @@
   margin: 0 auto 1rem;
   width: 20rem;
   justify-content: space-between;
+  align-items: center;
 
   #difficulty-selector {
+    border-radius: 1.5rem;
+  }
+
+  #reset-score {
+    display: flex;
+    background: var(--transparent-aqua);
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 1.5rem;
+
+    img {
+      width: .7rem;
+      margin-right: .2rem;
+    }
   }
 
   #reset {
     display: flex;
-    background-color: rgba(42, 116, 199, 0.65);
+    background-color: var(--brighter-blue);
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    height: 2.2rem;
-    width: 2.2rem;
-    border-radius: 50%;
+    border-radius: 1.5rem;
 
     img {
-      width: 1rem;
+      width: .7rem;
+      margin-right: .2rem;
     }
   }
 }
 
 main {
   display: grid;
-  grid-template-columns: 7rem 7rem 7rem;
+  grid-template-columns: 6rem 6rem 6rem;
   grid-gap: 0;
   justify-content: center;
   position: relative;
 }
 
 app-square {
-  height: 7rem;
+  height: 6rem;
 
   .disabled {
     pointer-events: none;
@@ -63,21 +78,17 @@ app-square {
 
   #first-move {
     text-align: center;
-    margin-bottom: 0;
-    color: #2D4057;
+    margin: 1rem auto 0;
+    color: var(--dark-blue);
     font-family: "Roboto Light";
     font-size: 1.5rem;
   }
 
   #winner {
     text-align: center;
-    margin-bottom: 0;
+    margin: 1rem auto 0;
     font-family: "Roboto Light";
     font-size: 1.5rem;
-
-    --winner-msg-color-1: #332851;
-    --winner-msg-color-2: #F6C667;
-
 
     animation: winner-msg-animation 2s forwards .2s;
   }
@@ -96,7 +107,14 @@ app-square {
       width: 4rem;
       border: 1px solid black;
       border-radius: 15%;
-      background-color: rgba(66, 118, 208, 0.5);
+    }
+
+    .x-icon {
+      background-color: var(--brighter-blue);
+    }
+
+    .o-icon {
+      background-color: var(--transparent-purple);
     }
 
     .winning-icon {
@@ -131,7 +149,6 @@ app-square {
     }
 
     .player-dot {
-      background: rgba(0, 94, 255, 0.18);
       border-radius: 50%;
       height: 2.1rem;
       width: 2.1rem;
@@ -144,52 +161,7 @@ app-square {
     }
 
     .my-turn {
-      background-color: #ffb700;
+      animation: grow 950ms forwards;
     }
-
-  }
-}
-
-
-@keyframes winner-msg-animation {
-  0% {
-    color: var(--winner-msg-color-1);
-  }
-
-  100% {
-    color: var(--winner-msg-color-2);
-  }
-}
-
-@keyframes wiggle {
-  15%
-  {
-    -webkit-transform: translateX(5px);
-    transform: translateX(5px);
-  }
-  30%
-  {
-    -webkit-transform: translateX(-5px);
-    transform: translateX(-5px);
-  }
-  50%
-  {
-    -webkit-transform: translateX(3px);
-    transform: translateX(3px);
-  }
-  65%
-  {
-    -webkit-transform: translateX(-3px);
-    transform: translateX(-3px);
-  }
-  80%
-  {
-    -webkit-transform: translateX(2px);
-    transform: translateX(2px);
-  }
-  100%
-  {
-    -webkit-transform: translateX(0);
-    transform: translateX(0);
   }
 }

@@ -1,5 +1,6 @@
-import {Component, OnInit, Input} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Winner} from '../../models/Winner';
+import {Mode} from './mode';
 
 @Component({
   selector: 'app-board',
@@ -13,8 +14,10 @@ export class BoardComponent implements OnInit {
   curPlayer: string;
   winningPlayer: string;
   board: any[];
-  humanScoreVsComp: number;
-  aiScoreVsHuman: number;
+  humanScoreVsCompEasy: number;
+  humanScoreVsCompHard: number;
+  aiScoreVsHumanEasy: number;
+  aiScoreVsHumanHard: number;
   player1Score: number;
   player2Score: number;
   winner: Winner;
@@ -23,6 +26,12 @@ export class BoardComponent implements OnInit {
   askPlayAgain = false;
   firstMove: boolean;
   canClick = true;
+  currentLevel: number;
+  availableModes = [
+    new Mode(1, 'Easy'),
+    new Mode(2, 'Hard'),
+    new Mode(3, '2-Player'),
+  ];
   winningLines = [
     // Horizontal
     [0, 1, 2],
@@ -38,34 +47,21 @@ export class BoardComponent implements OnInit {
     [0, 4, 8],
     [2, 4, 6],
   ];
-  availableModes = [
-    {
-      id: 1,
-      level: 'easy'
-    },
-    {
-      id: 2,
-      level: 'hard'
-    },
-    {
-      id: 3,
-      level: '2-Player'
-    }
-  ];
-  currentLevel: number;
 
   constructor() {
   }
 
   ngOnInit() {
-    this.resetScores();
     this.currentLevel = 1;
+    this.resetScores();
     this.newGame();
   }
 
   resetScores() {
-    this.humanScoreVsComp = 0;
-    this.aiScoreVsHuman = 0;
+    this.humanScoreVsCompEasy = 0;
+    this.humanScoreVsCompHard = 0;
+    this.aiScoreVsHumanEasy = 0;
+    this.aiScoreVsHumanHard = 0;
     this.player1Score = 0;
     this.player2Score = 0;
   }
@@ -107,34 +103,16 @@ export class BoardComponent implements OnInit {
     this.curPlayer = this.humanPlayer;
   }
 
-  onStartGameHuman2() {
-    this.humanPlayer = 'O';
-    this.aiPlayer = 'X';
-    this.curPlayer = this.humanPlayer;
-  }
-
   onSelectHuman(selection: number) {
-    if (selection === 1) {
-      this.onStartGameHuman();
-    } else {
-      this.onStartGameHuman2();
-    }
+    selection === 1
+      ? this.curPlayer = 'X'
+      : this.curPlayer = 'O';
 
-    if (!this.askPlayAgain) {
-      this.displayPlayerSelect = false;
-    } else {
-      this.displayPlayerSelect = false;
+    if (this.askPlayAgain) {
       this.clearBoard();
     }
 
     this.firstMove = false;
-  }
-
-  switchPlayer() {
-    const temp = this.humanPlayer;
-    this.humanPlayer = this.aiPlayer;
-    this.aiPlayer = temp;
-    this.curPlayer = this.humanPlayer;
   }
 
   makeHumanMove(box: number) {
@@ -143,29 +121,32 @@ export class BoardComponent implements OnInit {
       return;
     }
 
-    if (this.askPlayAgain || this.displayPlayerSelect) {
+    if (this.askPlayAgain) {
       this.askPlayAgain = false;
-      this.displayPlayerSelect = false;
     }
 
     if (this.board[box] === null) {
-      this.board[box] = this.humanPlayer;
-      this.curPlayer = this.aiPlayer;
-      const winnerResult = this.calculateWinner(this.board);
-      winnerResult ? this.winnerMsg(winnerResult) : this.makeComputerMove();
+      if (this.currentLevel !== 3) {
+        this.board[box] = this.curPlayer;
+        const winnerResult = this.calculateWinner(this.board);
+        this.curPlayer = this.aiPlayer;
+        this.firstMove = false;
+        winnerResult ? this.winnerMsg(winnerResult) : this.makeComputerMove();
+      } else {
+        this.board[box] = this.curPlayer;
+        this.curPlayer === 'X' ? this.curPlayer = 'O' : this.curPlayer = 'X';
+        this.checkWinner();
+      }
     }
   }
 
   onStartGameAI() {
     if (!this.askPlayAgain) {
-      this.aiPlayer = 'X';
-      this.humanPlayer = 'O';
-      this.displayPlayerSelect = false;
+      this.curPlayer = this.aiPlayer;
       this.makeComputerMove();
     } else {
       this.newGame();
-      this.aiPlayer = 'X';
-      this.humanPlayer = 'O';
+      this.curPlayer = this.aiPlayer;
       this.askPlayAgain = false;
       this.makeComputerMove();
     }
@@ -188,36 +169,15 @@ export class BoardComponent implements OnInit {
   makeComputerMove() {
     this.canClick = false;
 
-
-    switch (this.currentLevel) {
-      case 1: {
-        setTimeout(() => {
-          this.computerMove();
-          this.canClick = true;
-          this.curPlayer = this.humanPlayer;
-        }, 750);
-        break;
+    setTimeout(() => {
+      if (this.currentLevel === 1) {
+        this.computerMove();
+      } else if (this.currentLevel === 2) {
+        this.makeAIMove();
       }
-      case 2: {
-        setTimeout(() => {
-          this.makeAIMove();
-          this.canClick = true;
-          this.curPlayer = this.humanPlayer;
-        }, 500);
-        break;
-      }
-      case 3: {
-        this.switchPlayer();
-        this.canClick = true;
-        this.curPlayer = this.humanPlayer;
-        const winnerResult = this.calculateWinner(this.board);
-
-        if (winnerResult) {
-          this.winnerMsg(winnerResult);
-        }
-        break;
-      }
-    }
+      this.canClick = true;
+      this.curPlayer = this.humanPlayer;
+    }, 750);
   }
 
   computerMove() {
@@ -226,12 +186,7 @@ export class BoardComponent implements OnInit {
 
     if (!this.board[randomSquare]) {
       this.board[randomSquare] = this.aiPlayer;
-
-      const winnerResult = this.calculateWinner(this.board);
-
-      if (winnerResult) {
-        this.winnerMsg(winnerResult);
-      }
+      this.checkWinner();
     }
   }
 
@@ -246,10 +201,7 @@ export class BoardComponent implements OnInit {
     }
     this.board[index] = this.aiPlayer;
 
-    const winnerResult = this.calculateWinner(this.board);
-    if (winnerResult) {
-      this.winnerMsg(winnerResult);
-    }
+    this.checkWinner();
   }
 
   minimax(board: string[], depth, player) {
@@ -333,16 +285,20 @@ export class BoardComponent implements OnInit {
         this.winner.text = 'DRAW GAME!';
         break;
       case this.aiPlayer:
-        if (this.currentLevel === 1 || this.currentLevel === 2) {
-          this.aiScoreVsHuman = this.aiScoreVsHuman + 1;
+        if (this.currentLevel === 1) {
+          this.aiScoreVsHumanEasy = this.aiScoreVsHumanEasy + 1;
+        } else if (this.currentLevel === 2) {
+          this.aiScoreVsHumanHard = this.aiScoreVsHumanHard + 1;
         } else if (this.currentLevel === 3) {
           this.player2Score = this.player2Score + 1;
         }
         this.winner.text = this.aiPlayer + ' WINS';
         break;
       case this.humanPlayer:
-        if (this.currentLevel === 1 || this.currentLevel === 2) {
-          this.humanScoreVsComp = this.humanScoreVsComp + 1;
+        if (this.currentLevel === 1) {
+          this.humanScoreVsCompEasy = this.humanScoreVsCompEasy + 1;
+        } else if (this.currentLevel === 2) {
+          this.humanScoreVsCompHard = this.humanScoreVsCompHard + 1;
         } else if (this.currentLevel === 3) {
           this.player1Score = this.player1Score + 1;
         }
@@ -354,5 +310,12 @@ export class BoardComponent implements OnInit {
   levelChange(currLevel: number) {
     this.currentLevel = +currLevel;
     this.newGame();
+  }
+
+  checkWinner() {
+    const winnerResult = this.calculateWinner(this.board);
+    if (winnerResult) {
+      this.winnerMsg(winnerResult);
+    }
   }
 }

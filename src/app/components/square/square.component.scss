@@ -1,6 +1,6 @@
 section {
-  height: 7rem;
-  width: 7rem;
+  height: 6rem;
+  width: 6rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -9,16 +9,6 @@ section {
   font-size: 4rem;
   font-family: Verdana;
   color: var(--transparent-blue);
-
-  --transparent-blue: rgba(45, 64, 87, 0.85);
-  --transparent-purple: rgba(59, 47, 94, 0.75);
-  --winner-color-1: #332851;
-  --winner-color-2: #9AE1E2;
-  --winner-color-3: #F6C667;
-  --loser-color-1: lightgrey;
-  --loser-color-2: darkgrey;
-  --loser-color-3: rgba(45, 64, 87, 0.4);
-  --transparent: rgba(255, 255, 255, 50);
 
   &:hover {
     cursor: pointer;

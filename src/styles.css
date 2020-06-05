@@ -1,0 +1,67 @@
+* {
+  --transparent-blue: rgba(45, 64, 87, 0.85);
+  --dark-blue: rgba(45, 64, 87, 0.85);
+  --brighter-blue: rgba(42, 116, 199, 0.60);
+  --transparent-purple: rgba(226, 59, 59, 0.6);
+  --transparent-green: rgba(140, 241, 25, 0.75);
+  --transparent-aqua: rgba(93, 244, 249, 0.6);
+  --winner-color-1: #332851;
+  --winner-color-2: #9AE1E2;
+  --winner-color-3: #F6C667;
+  --loser-color-1: lightgrey;
+  --loser-color-2: darkgrey;
+  --loser-color-3: rgba(45, 64, 87, 0.4);
+  --transparent: rgba(255, 255, 255, 50);
+}
+
+@keyframes grow {
+  from {
+    background-color: var(--transparent);
+  }
+  to {
+    background-color: var(--transparent-green);
+  }
+}
+
+@keyframes winner-msg-animation {
+  0% {
+    background: none;
+    color: var(--winner-color-1);
+  }
+
+  50% {
+    background: rgba(0, 0, 0, 0.25);
+  }
+
+  100% {
+    background: rgba(0, 0, 0, 0.75);
+    color: var(--winner-color-3);
+  }
+}
+
+@keyframes wiggle {
+  15% {
+    -webkit-transform: translateX(5px);
+    transform: translateX(5px);
+  }
+  30% {
+    -webkit-transform: translateX(-5px);
+    transform: translateX(-5px);
+  }
+  50% {
+    -webkit-transform: translateX(3px);
+    transform: translateX(3px);
+  }
+  65% {
+    -webkit-transform: translateX(-3px);
+    transform: translateX(-3px);
+  }
+  80% {
+    -webkit-transform: translateX(2px);
+    transform: translateX(2px);
+  }
+  100% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
+}
