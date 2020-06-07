@@ -25,17 +25,19 @@
 
 @keyframes winner-msg-animation {
   0% {
-    background: none;
-    color: var(--winner-color-1);
+    color: var(--winner-color-3);
   }
 
-  50% {
-    background: rgba(0, 0, 0, 0.25);
+  33% {
+    color: var(--winner-color-2);
+  }
+
+  66% {
+    color: var(--brighter-blue);
   }
 
   100% {
-    background: rgba(0, 0, 0, 0.75);
-    color: var(--winner-color-3);
+    color: var(--winner-color-1);
   }
 }
 

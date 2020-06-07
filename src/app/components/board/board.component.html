@@ -10,7 +10,7 @@
     </option>
   </select>
 
-  <button id="reset" (click)="clearBoard()">
+  <button id="reset-game" (click)="clearBoard()">
     <img src="./assets/images/reload.svg" alt="Clear Board"/>
     <span>Clear</span>
   </button>
@@ -29,24 +29,19 @@
 </main>
 
 <section id="player-selection-area" >
-  <div *ngIf="winner;else message">
-    <h3 id="winner" [ngClass]="{ invisible: isBoardEmpty }">{{winner.text}}</h3>
-  </div>
-  <ng-template #message>
-    <h3 id="first-move" [ngClass]="{ invisible: !isBoardEmpty }">Who Moves First?</h3>
-  </ng-template>
-
   <div id="player-select">
     <section id="human-player-select">
       <img class="player-icon x-icon" alt="Human Player" *ngIf="currentLevel !== 3"
            [ngClass]="{
-            'winning-icon': (winningPlayer === this.humanPlayer),
+            'winning-icon': (winningPlayer === humanPlayer),
+            'losing-icon': (winningPlayer === aiPlayer),
             'not-clickable': (!isBoardEmpty && !winningPlayer)
             }"
            (click)="onSelectHuman(1)" alt="Player 1" src="./assets/images/brain.svg"/>
       <img class="player-icon x-icon" *ngIf="currentLevel === 3"
            [ngClass]="{
             'winning-icon': (winningPlayer === 'X'),
+            'losing-icon': (winningPlayer === 'O'),
             'not-clickable': (!isBoardEmpty && !winningPlayer)
             }"
            (click)="onSelectHuman(1)" src="./assets/images/brain.svg"/>
@@ -57,7 +52,6 @@
             'my-turn': (currentPlayer === this.humanPlayer && !winner && currentLevel !== 3)}">
           {{humanPlayer}}
         </section>
-        <span style="text-decoration: underline">Score</span>
         <br>
         <span *ngIf="currentLevel === 1; else level2">{{humanScoreVsCompEasy}}</span>
         <ng-template #level2>{{humanScoreVsCompHard}}</ng-template>
@@ -69,28 +63,38 @@
             'my-turn': (currentPlayer === 'X' && !winner && currentLevel === 3)}">
           X
         </section>
-        <span style="text-decoration: underline">Score</span>
         <br>
         {{player1Score}}
       </section>
+    </section>
+
+    <section class="score" *ngIf="currentLevel === 1 || currentLevel === 2">
+      <span class="draw-game-text">T</span>
+      <br>
+      <span *ngIf="currentLevel === 1; else level2; else level3">{{level1Draw}}</span>
+      <ng-template #level2>{{level2Draw}}</ng-template>
+      <ng-template #level3>{{level3Draw}}</ng-template>
     </section>
 
     <section id="ai-player-select">
       <img class="player-icon o-icon" alt="Easy Opponent" *ngIf="currentLevel === 1"
            [ngClass]="{
             'winning-icon': (winningPlayer === aiPlayer),
+            'losing-icon': (winningPlayer === humanPlayer),
             'not-clickable': (!isBoardEmpty && !winningPlayer)
             }"
            (click)="onStartGameAI()" src="./assets/images/robot.svg"/>
       <img class="player-icon o-icon" alt="Hard Opponent" *ngIf="currentLevel === 2"
            [ngClass]="{
             'winning-icon': (winningPlayer === aiPlayer),
+            'losing-icon': (winningPlayer === humanPlayer),
             'not-clickable': (!isBoardEmpty && !winningPlayer)
             }"
            (click)="onStartGameAI()" src="./assets/images/einstein.svg"/>
       <img class="player-icon o-icon" alt="Player 2" *ngIf="currentLevel === 3"
            [ngClass]="{
             'winning-icon': (winningPlayer === 'O'),
+            'losing-icon': (winningPlayer === 'X'),
             'not-clickable': (!isBoardEmpty && !winningPlayer)
             }"
            (click)="onSelectHuman(2)" src="./assets/images/brain-opp.svg"/>
@@ -101,7 +105,6 @@
             'my-turn': (currentPlayer === this.aiPlayer && !winner && currentLevel !== 3)}">
           {{aiPlayer}}
         </section>
-        <span style="text-decoration: underline">Score</span>
         <br>
         <span *ngIf="currentLevel === 1; else level2">{{aiScoreVsHumanEasy}}</span>
         <ng-template #level2>{{aiScoreVsHumanHard}}</ng-template>
@@ -113,10 +116,17 @@
             'my-turn': (currentPlayer === 'O' && !winner && currentLevel === 3)}">
           O
         </section>
-        <span style="text-decoration: underline">Score</span>
         <br>
         {{player2Score}}
       </section>
     </section>
   </div>
+
+  <div *ngIf="winner;else message">
+    <h3 id="winner" [ngClass]="{ invisible: isBoardEmpty }">{{winner.text}}</h3>
+  </div>
+  <ng-template #message>
+    <h3 id="first-move" [ngClass]="{ invisible: !isBoardEmpty }">Who Moves First?</h3>
+  </ng-template>
+
 </section>

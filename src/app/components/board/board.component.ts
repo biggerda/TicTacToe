@@ -20,6 +20,9 @@ export class BoardComponent implements OnInit {
   aiScoreVsHumanHard: number;
   player1Score: number;
   player2Score: number;
+  level1Draw: number;
+  level2Draw: number;
+  level3Draw: number;
   winner: Winner;
   drawGame: boolean;
   isGameOver = true;
@@ -64,6 +67,9 @@ export class BoardComponent implements OnInit {
     this.aiScoreVsHumanHard = 0;
     this.player1Score = 0;
     this.player2Score = 0;
+    this.level1Draw = 0;
+    this.level2Draw = 0;
+    this.level3Draw = 0;
   }
 
   newGame() {
@@ -87,7 +93,6 @@ export class BoardComponent implements OnInit {
       this.newGame();
     }
   }
-
 
   get isBoardEmpty(): boolean {
     return this.board.every(box => box === null);
@@ -125,7 +130,7 @@ export class BoardComponent implements OnInit {
       this.askPlayAgain = false;
     }
 
-    if (this.board[box] === null) {
+    if (!this.board[box]) {
       if (this.currentLevel !== 3) {
         this.board[box] = this.curPlayer;
         const winnerResult = this.calculateWinner(this.board);
@@ -141,15 +146,14 @@ export class BoardComponent implements OnInit {
   }
 
   onStartGameAI() {
-    if (!this.askPlayAgain) {
-      this.curPlayer = this.aiPlayer;
-      this.makeComputerMove();
-    } else {
+    this.curPlayer = this.aiPlayer;
+
+    if (!!this.askPlayAgain) {
       this.newGame();
-      this.curPlayer = this.aiPlayer;
       this.askPlayAgain = false;
-      this.makeComputerMove();
     }
+
+    this.makeComputerMove();
   }
 
 
@@ -160,7 +164,6 @@ export class BoardComponent implements OnInit {
       if (value === null) {
         newBoard.push(index);
       }
-      return value === null;
     });
 
     return newBoard;
@@ -281,6 +284,13 @@ export class BoardComponent implements OnInit {
 
     switch (winner.winner) {
       case 'draw':
+        if (this.currentLevel === 1) {
+          this.level1Draw = this.level1Draw + 1;
+        } else if (this.currentLevel === 2) {
+          this.level2Draw = this.level2Draw + 1;
+        } else if (this.currentLevel === 3) {
+          this.level3Draw = this.level3Draw + 1;
+        }
         this.drawGame = true;
         this.winner.text = 'DRAW GAME!';
         break;

@@ -1,16 +1,18 @@
 #top-panel {
   display: flex;
-  margin: 0 auto 1rem;
+  margin: .8rem auto .5rem;
   width: 20rem;
   justify-content: space-between;
   align-items: center;
 
   #difficulty-selector {
+    height: 1.5rem;
     border-radius: 1.5rem;
   }
 
   #reset-score {
     display: flex;
+    height: 1.5rem;
     background: var(--transparent-aqua);
     justify-content: center;
     align-items: center;
@@ -23,8 +25,9 @@
     }
   }
 
-  #reset {
+  #reset-game {
     display: flex;
+    height: 1.5rem;
     background-color: var(--brighter-blue);
     justify-content: center;
     align-items: center;
@@ -73,12 +76,12 @@ app-square {
 }
 
 #player-selection-area {
-  margin: 0 auto 1rem;
+  margin: .8rem auto 1rem;
   width: 20rem;
 
   #first-move {
     text-align: center;
-    margin: 1rem auto 0;
+    margin: .8rem auto 0;
     color: var(--dark-blue);
     font-family: "Roboto Light";
     font-size: 1.5rem;
@@ -86,7 +89,7 @@ app-square {
 
   #winner {
     text-align: center;
-    margin: 1rem auto 0;
+    margin: .8rem auto 0;
     font-family: "Roboto Light";
     font-size: 1.5rem;
 
@@ -122,6 +125,10 @@ app-square {
       animation: wiggle 1s forwards;
     }
 
+    .losing-icon {
+      background-color: rgba(121, 121, 121, 0.55);
+    }
+
     .not-a-win {
       background: transparent !important;
     }
@@ -143,25 +150,33 @@ app-square {
 
     .score {
       font-family: "Roboto Light";
-      margin: .3rem .8rem;
+      margin: .3rem .6rem;
       text-align: center;
-      align-self: center;
+      font-size: 1.2rem;
+      align-self: flex-end;
+    }
+
+    .draw-game-text {
+      text-decoration: underline;
     }
 
     .player-dot {
       border-radius: 50%;
-      height: 2.1rem;
-      width: 2.1rem;
-      line-height: 2.1rem;
+      border: .1rem black dotted;
+      height: 2.2rem;
+      width: 2.2rem;
+      line-height: 2.5rem;
       text-align: center;
       bottom: 1rem;
       right: -.5rem;
       margin: 0 auto;
       font-size: 1.5rem;
+      font-weight: bold;
     }
 
     .my-turn {
-      animation: grow 950ms forwards;
+      border: .1rem black dotted;
+      animation: grow 900ms forwards;
     }
   }
 }
