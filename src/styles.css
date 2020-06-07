@@ -14,6 +14,11 @@
   --transparent: rgba(255, 255, 255, 50);
 }
 
+h2 {
+  text-align: center;
+  color: var(--dark-blue);
+}
+
 @keyframes grow {
   from {
     background-color: var(--transparent);
