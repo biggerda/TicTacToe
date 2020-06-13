@@ -53,8 +53,8 @@
           {{humanPlayer}}
         </section>
         <br>
-        <span *ngIf="currentLevel === 1; else level2">{{humanScoreVsCompEasy}}</span>
-        <ng-template #level2>{{humanScoreVsCompHard}}</ng-template>
+        <span *ngIf="currentLevel === 1; else level2">{{this.gameScore.easyHuman}}</span>
+        <ng-template #level2>{{this.gameScore.hardHuman}}</ng-template>
       </section>
 
       <section class="score" *ngIf="currentLevel === 3">
@@ -64,16 +64,16 @@
           X
         </section>
         <br>
-        {{player1Score}}
+        {{this.gameScore.versusPlayer1}}
       </section>
     </section>
 
-    <section class="score" *ngIf="currentLevel === 1 || currentLevel === 2">
+    <section class="score">
       <span class="draw-game-text">T</span>
       <br>
-      <span *ngIf="currentLevel === 1; else level2; else level3">{{level1Draw}}</span>
-      <ng-template #level2>{{level2Draw}}</ng-template>
-      <ng-template #level3>{{level3Draw}}</ng-template>
+      <span *ngIf="currentLevel === 1; else level2; else level3">{{this.gameScore.easyDraw}}</span>
+      <ng-template #level2>{{this.gameScore.hardDraw}}</ng-template>
+      <ng-template #level3>{{this.gameScore.versusDraw}}</ng-template>
     </section>
 
     <section id="ai-player-select">
@@ -106,8 +106,8 @@
           {{aiPlayer}}
         </section>
         <br>
-        <span *ngIf="currentLevel === 1; else level2">{{aiScoreVsHumanEasy}}</span>
-        <ng-template #level2>{{aiScoreVsHumanHard}}</ng-template>
+        <span *ngIf="currentLevel === 1; else level2">{{this.gameScore.easyAI}}</span>
+        <ng-template #level2>{{this.gameScore.hardAI}}</ng-template>
       </section>
 
       <section class="score" *ngIf="currentLevel === 3">
@@ -117,7 +117,7 @@
           O
         </section>
         <br>
-        {{player2Score}}
+        {{this.gameScore.versusPlayer2}}
       </section>
     </section>
   </div>

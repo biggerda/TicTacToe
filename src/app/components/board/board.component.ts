@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Winner} from '../../models/Winner';
 import {Mode} from './mode';
+import {Score} from '../../models/Score';
 
 @Component({
   selector: 'app-board',
@@ -14,15 +15,7 @@ export class BoardComponent implements OnInit {
   curPlayer: string;
   winningPlayer: string;
   board: any[];
-  humanScoreVsCompEasy: number;
-  humanScoreVsCompHard: number;
-  aiScoreVsHumanEasy: number;
-  aiScoreVsHumanHard: number;
-  player1Score: number;
-  player2Score: number;
-  level1Draw: number;
-  level2Draw: number;
-  level3Draw: number;
+  gameScore: Score = new Score();
   winner: Winner;
   drawGame: boolean;
   isGameOver = true;
@@ -61,15 +54,7 @@ export class BoardComponent implements OnInit {
   }
 
   resetScores() {
-    this.humanScoreVsCompEasy = 0;
-    this.humanScoreVsCompHard = 0;
-    this.aiScoreVsHumanEasy = 0;
-    this.aiScoreVsHumanHard = 0;
-    this.player1Score = 0;
-    this.player2Score = 0;
-    this.level1Draw = 0;
-    this.level2Draw = 0;
-    this.level3Draw = 0;
+    this.gameScore.reset();
   }
 
   newGame() {
@@ -285,32 +270,32 @@ export class BoardComponent implements OnInit {
     switch (winner.winner) {
       case 'draw':
         if (this.currentLevel === 1) {
-          this.level1Draw = this.level1Draw + 1;
+          this.gameScore.easyDraw++;
         } else if (this.currentLevel === 2) {
-          this.level2Draw = this.level2Draw + 1;
+          this.gameScore.hardDraw++;
         } else if (this.currentLevel === 3) {
-          this.level3Draw = this.level3Draw + 1;
+          this.gameScore.versusDraw++;
         }
         this.drawGame = true;
         this.winner.text = 'DRAW GAME!';
         break;
       case this.aiPlayer:
         if (this.currentLevel === 1) {
-          this.aiScoreVsHumanEasy = this.aiScoreVsHumanEasy + 1;
+          this.gameScore.easyAI++;
         } else if (this.currentLevel === 2) {
-          this.aiScoreVsHumanHard = this.aiScoreVsHumanHard + 1;
+          this.gameScore.hardAI++;
         } else if (this.currentLevel === 3) {
-          this.player2Score = this.player2Score + 1;
+          this.gameScore.versusPlayer2++;
         }
         this.winner.text = this.aiPlayer + ' WINS';
         break;
       case this.humanPlayer:
         if (this.currentLevel === 1) {
-          this.humanScoreVsCompEasy = this.humanScoreVsCompEasy + 1;
+          this.gameScore.easyHuman++;
         } else if (this.currentLevel === 2) {
-          this.humanScoreVsCompHard = this.humanScoreVsCompHard + 1;
+          this.gameScore.hardHuman++;
         } else if (this.currentLevel === 3) {
-          this.player1Score = this.player1Score + 1;
+          this.gameScore.versusPlayer1++;
         }
         this.winner.text = this.humanPlayer + ' WINS';
         break;
