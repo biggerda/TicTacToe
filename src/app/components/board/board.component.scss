@@ -6,19 +6,24 @@
   align-items: center;
 
   #difficulty-selector {
-    height: 1.5rem;
-    border-radius: 1.5rem;
+    height: 2rem;
+    width: 5rem;
+    border-radius: .5rem;
     background-color: var(--transparent);
   }
 
   #reset-score {
     display: flex;
-    height: 1.5rem;
+    height: 2rem;
     background: var(--transparent-aqua);
     justify-content: center;
     align-items: center;
     cursor: pointer;
     border-radius: 1.5rem;
+
+    &:hover {
+      background: var(--lighter-transparent-aqua);
+    }
 
     img {
       width: .7rem;
@@ -28,12 +33,16 @@
 
   #reset-game {
     display: flex;
-    height: 1.5rem;
+    height: 2rem;
     background-color: var(--brighter-blue);
     justify-content: center;
     align-items: center;
     cursor: pointer;
     border-radius: 1.5rem;
+
+    &:hover {
+      background: var(--lighter-blue);
+    }
 
     img {
       width: .7rem;
@@ -115,10 +124,18 @@ app-square {
 
     .x-icon {
       background-color: var(--brighter-blue);
+
+      &:hover {
+        background-color: var(--lighter-blue);
+      }
     }
 
     .o-icon {
       background-color: var(--transparent-purple);
+
+      &:hover {
+        background-color: var(--lighter-purple);
+      }
     }
 
     .winning-icon {
