@@ -50,7 +50,7 @@ export class BoardComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.currentLevel = 1;
+    this.currentLevel = 3;
     this.resetScores();
     this.newGame();
   }
