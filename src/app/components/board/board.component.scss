@@ -9,6 +9,7 @@
     height: 1.7rem;
     width: 5rem;
     border-radius: .5rem;
+    padding-left: .5rem;
     background-color: var(--transparent);
     font-size: .8rem;
 
@@ -30,6 +31,7 @@
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    border: none;
     border-radius: 1.5rem;
     font-size: .8em;
 
@@ -45,6 +47,7 @@
 
   #reset-game {
     display: flex;
+    border: none;
     height: 1.7rem;
     background-color: var(--brighter-blue);
     justify-content: center;
@@ -128,13 +131,13 @@ app-square {
       margin-top: .5rem;
       padding: .5rem;
       cursor: pointer;
-      width: 3.5rem;
-      //border: 1px solid black;
+      width: 4.2rem;
+      border: none;
       border-radius: 15%;
     }
 
     .x-icon {
-      //background-color: var(--brighter-blue);
+      background-color: var(--brighter-blue);
 
       &:hover {
         background-color: var(--lighter-blue);
@@ -142,7 +145,7 @@ app-square {
     }
 
     .o-icon {
-      //background-color: var(--transparent-purple);
+      background-color: var(--transparent-purple);
 
       &:hover {
         background-color: var(--lighter-purple);
@@ -159,7 +162,11 @@ app-square {
     }
 
     .losing-icon {
-      //background-color: rgba(121, 121, 121, 0.55);
+      background-color: rgba(94, 67, 67, 0.55);
+
+      &:hover {
+        background-color: rgba(94, 67, 67, 0.8);
+      }
     }
 
     .not-a-win {
