@@ -161,9 +161,19 @@ export class BoardComponent implements OnInit {
 
     setTimeout(() => {
       if (this.currentLevel === 1) {
-        this.makeRandomMove();
+        const random = Math.round(Math.random());
+        switch (random) {
+          case 0:
+            this.makeRandomMove();
+            break;
+          case 1:
+            this.makeAIMove();
+            break;
+        }
       } else if (this.currentLevel === 2) {
-        switch (Math.floor(Math.random() * 2)) {
+        const random = Math.round(Math.random() * 2);
+        console.log(random);
+        switch (random) {
           case 0:
             this.makeRandomMove();
             break;
@@ -206,15 +216,15 @@ export class BoardComponent implements OnInit {
     this.checkWinner();
   }
 
-  minimax(board: string[], depth, player) {
+  minimax(board: string[], depth = 4, player) {
     const winnerResults = this.calculateWinner(board);
 
     if (winnerResults) {
       switch (winnerResults.winner) {
         case this.humanPlayer:
-          return -100 + depth;
+          return -100 - depth;
         case this.aiPlayer:
-          return 100 - depth;
+          return 100 + depth;
         case 'draw':
           return 0;
       }
