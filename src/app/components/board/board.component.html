@@ -31,14 +31,14 @@
 <section id="player-selection-area" >
   <div id="player-select">
     <section id="human-player-select">
-      <img class="player-icon x-icon" alt="Human Player" *ngIf="currentLevel !== 3"
+      <img class="player-icon x-icon" alt="Human Player" *ngIf="currentLevel !== 4"
            [ngClass]="{
             'winning-icon': (winningPlayer === humanPlayer),
             'losing-icon': (winningPlayer === aiPlayer),
             'not-clickable': (!isBoardEmpty && !winningPlayer)
             }"
            (click)="onSelectHuman(1)" alt="Player 1" src="./assets/images/brain.svg"/>
-      <img class="player-icon x-icon" *ngIf="currentLevel === 3"
+      <img class="player-icon x-icon" *ngIf="currentLevel === 4"
            [ngClass]="{
             'winning-icon': (winningPlayer === 'X'),
             'losing-icon': (winningPlayer === 'O'),
@@ -46,21 +46,22 @@
             }"
            (click)="onSelectHuman(1)" src="./assets/images/brain.svg"/>
 
-      <section class="score" *ngIf="currentLevel === 1 || currentLevel === 2">
+      <section class="score" *ngIf="currentLevel !== 4">
         <section class="player-dot"
            [ngClass]="{
-            'my-turn': (currentPlayer === this.humanPlayer && !winner && currentLevel !== 3)}">
+            'my-turn': (currentPlayer === this.humanPlayer && !winner && currentLevel !== 4)}">
           {{humanPlayer}}
         </section>
         <br>
-        <span *ngIf="currentLevel === 1; else level2">{{this.gameScore.easyHuman}}</span>
-        <ng-template #level2>{{this.gameScore.hardHuman}}</ng-template>
+        <span *ngIf="currentLevel === 1">{{this.gameScore.easyHuman}}</span>
+        <span *ngIf="currentLevel === 2">{{this.gameScore.mediumHuman}}</span>
+        <span *ngIf="currentLevel === 3">{{this.gameScore.hardHuman}}</span>
       </section>
 
-      <section class="score" *ngIf="currentLevel === 3">
+      <section class="score" *ngIf="currentLevel === 4">
         <section class="player-dot"
           [ngClass]="{
-            'my-turn': (currentPlayer === 'X' && !winner && currentLevel === 3)}">
+            'my-turn': (currentPlayer === 'X' && !winner && currentLevel === 4)}">
           X
         </section>
         <br>
@@ -71,9 +72,10 @@
     <section class="score">
       <span class="draw-game-text">T</span>
       <br>
-      <span *ngIf="currentLevel === 1; else level2; else level3">{{this.gameScore.easyDraw}}</span>
-      <ng-template #level2>{{this.gameScore.hardDraw}}</ng-template>
-      <ng-template #level3>{{this.gameScore.versusDraw}}</ng-template>
+      <span *ngIf="currentLevel === 1">{{this.gameScore.easyDraw}}</span>
+      <span *ngIf="currentLevel === 2">{{this.gameScore.mediumDraw}}</span>
+      <span *ngIf="currentLevel === 3">{{this.gameScore.hardDraw}}</span>
+      <span *ngIf="currentLevel === 4">{{this.gameScore.versusDraw}}</span>
     </section>
 
     <section id="ai-player-select">
@@ -84,14 +86,21 @@
             'not-clickable': (!isBoardEmpty && !winningPlayer)
             }"
            (click)="onStartGameAI()" src="./assets/images/robot.svg"/>
-      <img class="player-icon o-icon" alt="Hard Opponent" *ngIf="currentLevel === 2"
+      <img class="player-icon o-icon" alt="Medium Opponent" *ngIf="currentLevel === 2"
+           [ngClass]="{
+            'winning-icon': (winningPlayer === aiPlayer),
+            'losing-icon': (winningPlayer === humanPlayer),
+            'not-clickable': (!isBoardEmpty && !winningPlayer)
+            }"
+           (click)="onStartGameAI()" src="./assets/images/human.svg"/>
+      <img class="player-icon o-icon" alt="Hard Opponent" *ngIf="currentLevel === 3"
            [ngClass]="{
             'winning-icon': (winningPlayer === aiPlayer),
             'losing-icon': (winningPlayer === humanPlayer),
             'not-clickable': (!isBoardEmpty && !winningPlayer)
             }"
            (click)="onStartGameAI()" src="./assets/images/einstein.svg"/>
-      <img class="player-icon o-icon" alt="Player 2" *ngIf="currentLevel === 3"
+      <img class="player-icon o-icon" alt="Player 2" *ngIf="currentLevel === 4"
            [ngClass]="{
             'winning-icon': (winningPlayer === 'O'),
             'losing-icon': (winningPlayer === 'X'),
@@ -99,33 +108,34 @@
             }"
            (click)="onSelectHuman(2)" src="./assets/images/brain-opp.svg"/>
 
-      <section class="score" *ngIf="currentLevel === 1 || currentLevel === 2">
+      <section class="score" *ngIf="currentLevel !== 4">
         <section class="player-dot"
                  [ngClass]="{
-            'my-turn': (currentPlayer === this.aiPlayer && !winner && currentLevel !== 3)}">
+            'my-turn': (currentPlayer === this.aiPlayer && !winner && currentLevel !== 4)}">
           {{aiPlayer}}
         </section>
         <br>
-        <span *ngIf="currentLevel === 1; else level2">{{this.gameScore.easyAI}}</span>
-        <ng-template #level2>{{this.gameScore.hardAI}}</ng-template>
+        <span *ngIf="currentLevel === 1">{{gameScore.easyAI}}</span>
+        <span *ngIf="currentLevel === 2">{{gameScore.mediumAI}}</span>
+        <span *ngIf="currentLevel === 3">{{gameScore.hardAI}}</span>
       </section>
 
-      <section class="score" *ngIf="currentLevel === 3">
+      <section class="score" *ngIf="currentLevel === 4">
         <section class="player-dot"
                  [ngClass]="{
-            'my-turn': (currentPlayer === 'O' && !winner && currentLevel === 3)}">
+            'my-turn': (currentPlayer === 'O' && !winner && currentLevel === 4)}">
           O
         </section>
         <br>
-        {{this.gameScore.versusPlayer2}}
+        {{gameScore.versusPlayer2}}
       </section>
     </section>
   </div>
 
-  <div *ngIf="winner;else message">
+  <div id="winner-block" *ngIf="winner;else message">
     <h3 id="winner" [ngClass]="{ invisible: isBoardEmpty }">{{winner.text}}</h3>
   </div>
-  <ng-template #message>
+  <ng-template id="first-move-block" #message>
     <h3 id="first-move" [ngClass]="{ invisible: !isBoardEmpty }">Who Moves First?</h3>
   </ng-template>
 

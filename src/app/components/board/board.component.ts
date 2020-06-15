@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Winner} from '../../models/Winner';
 import {Mode} from './mode';
 import {Score} from '../../models/Score';
+import {log} from 'util';
 
 @Component({
   selector: 'app-board',
@@ -25,8 +26,9 @@ export class BoardComponent implements OnInit {
   currentLevel: number;
   availableModes = [
     new Mode(1, 'Easy'),
-    new Mode(2, 'Hard'),
-    new Mode(3, '2-Player'),
+    new Mode(2, 'Medium'),
+    new Mode(3, 'Hard'),
+    new Mode(4, '2-Player'),
   ];
   winningLines = [
     // Horizontal
@@ -54,7 +56,7 @@ export class BoardComponent implements OnInit {
   }
 
   resetScores() {
-    this.gameScore.reset();
+    this.gameScore.reset(this.currentLevel);
   }
 
   newGame() {
@@ -64,7 +66,7 @@ export class BoardComponent implements OnInit {
     this.drawGame = false;
     this.isGameOver = false;
     this.firstMove = true;
-    if (this.currentLevel !== 3) {
+    if (this.currentLevel !== 4) {
       this.onStartGameHuman();
     }
   }
@@ -116,7 +118,7 @@ export class BoardComponent implements OnInit {
     }
 
     if (!this.board[box]) {
-      if (this.currentLevel !== 3) {
+      if (this.currentLevel !== 4) {
         this.board[box] = this.curPlayer;
         const winnerResult = this.calculateWinner(this.board);
         this.curPlayer = this.aiPlayer;
@@ -159,8 +161,18 @@ export class BoardComponent implements OnInit {
 
     setTimeout(() => {
       if (this.currentLevel === 1) {
-        this.computerMove();
+        this.makeRandomMove();
       } else if (this.currentLevel === 2) {
+        switch (Math.floor(Math.random() * 2)) {
+          case 0:
+            this.makeRandomMove();
+            break;
+          case 1:
+          case 2:
+            this.makeAIMove();
+            break;
+        }
+      } else if (this.currentLevel === 3) {
         this.makeAIMove();
       }
       this.canClick = true;
@@ -168,7 +180,8 @@ export class BoardComponent implements OnInit {
     }, 750);
   }
 
-  computerMove() {
+  makeRandomMove() {
+    console.log(`rando`);
     const aiChoices = this.movesLeft();
     const randomSquare = aiChoices[Math.floor(Math.random() * aiChoices.length)];
 
@@ -179,6 +192,7 @@ export class BoardComponent implements OnInit {
   }
 
   makeAIMove() {
+    console.log(`ai`);
     let index;
 
     if (this.firstMove) {
@@ -272,8 +286,10 @@ export class BoardComponent implements OnInit {
         if (this.currentLevel === 1) {
           this.gameScore.easyDraw++;
         } else if (this.currentLevel === 2) {
-          this.gameScore.hardDraw++;
+          this.gameScore.mediumDraw++;
         } else if (this.currentLevel === 3) {
+          this.gameScore.hardDraw++;
+        } else if (this.currentLevel === 4) {
           this.gameScore.versusDraw++;
         }
         this.drawGame = true;
@@ -283,8 +299,10 @@ export class BoardComponent implements OnInit {
         if (this.currentLevel === 1) {
           this.gameScore.easyAI++;
         } else if (this.currentLevel === 2) {
-          this.gameScore.hardAI++;
+          this.gameScore.mediumAI++;
         } else if (this.currentLevel === 3) {
+          this.gameScore.hardAI++;
+        } else if (this.currentLevel === 4) {
           this.gameScore.versusPlayer2++;
         }
         this.winner.text = this.aiPlayer + ' WINS';
@@ -293,8 +311,10 @@ export class BoardComponent implements OnInit {
         if (this.currentLevel === 1) {
           this.gameScore.easyHuman++;
         } else if (this.currentLevel === 2) {
-          this.gameScore.hardHuman++;
+          this.gameScore.mediumHuman++;
         } else if (this.currentLevel === 3) {
+          this.gameScore.hardHuman++;
+        } else if (this.currentLevel === 4) {
           this.gameScore.versusPlayer1++;
         }
         this.winner.text = this.humanPlayer + ' WINS';
