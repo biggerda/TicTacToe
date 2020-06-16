@@ -2,14 +2,27 @@
   font-family: "Helvetica Neue";
   font-weight: 300;
   --transparent-blue: rgba(45, 64, 87, 0.85);
-  --dark-blue: rgba(45, 64, 87, 0.85);
   --brighter-blue: rgba(42, 116, 199, 0.6);
   --lighter-blue: rgba(42, 116, 199, 0.8);
-  --transparent-purple: rgba(226, 59, 59, 0.6);
-  --lighter-purple: rgba(226, 59, 59, 0.8);
   --transparent-green: rgba(140, 241, 25, 0.75);
   --transparent-aqua: rgba(93, 244, 249, 0.5);
   --lighter-transparent-aqua: rgba(93, 244, 249, 0.85);
+
+  --teal-faded: rgba(52, 157, 146, .50);
+  --teal: rgba(52, 157, 146, 0.85);
+  --tan-faded: rgba(238, 189, 107, .50);
+  --tan: rgba(238, 189, 107, .85);
+  --aqua-faded: rgba(191, 230, 239, .50);
+  --aqua: rgba(191, 230, 239, .85);
+  --blue-faded: rgba(67, 118, 149, .50);
+  --blue: rgba(67, 118, 149, .85);
+  --dark-blue-faded: rgba(3, 7, 46, .50);
+  --dark-blue: rgba(3, 7, 46, .85);
+  --purple-faded: rgba(226, 59, 59, 0.5);
+  --purple: rgba(226, 59, 59, 0.85);
+  --loser-faded: rgba(45, 64, 87, 0.2);
+  --loser: rgba(45, 64, 87, 0.4);
+
   --winner-color-1: #332851;
   --winner-color-2: #9AE1E2;
   --winner-color-3: #F6C667;
@@ -38,16 +51,12 @@ h2 {
     color: var(--winner-color-3);
   }
 
-  33% {
+  50% {
     color: var(--winner-color-2);
   }
 
-  66% {
-    color: var(--brighter-blue);
-  }
-
   100% {
-    color: var(--winner-color-1);
+    color: var(--winner-color-3);
   }
 }
 

@@ -7,9 +7,9 @@
 
   #difficulty-selector {
     height: 1.7rem;
-    width: 5rem;
+    width: 5.5rem;
     border-radius: .5rem;
-    padding-left: .5rem;
+    padding: 0 .5rem;
     background-color: var(--transparent);
     font-size: .8rem;
 
@@ -27,16 +27,17 @@
   #reset-score {
     display: flex;
     height: 1.7rem;
-    background: var(--transparent-aqua);
+    background: var(--aqua-faded);
     justify-content: center;
     align-items: center;
     cursor: pointer;
     border: none;
     border-radius: 1.5rem;
     font-size: .8em;
+    border: 1px var(--dark-blue-faded) solid;
 
     &:hover {
-      background: var(--lighter-transparent-aqua);
+      background: var(--aqua);
     }
 
     img {
@@ -49,15 +50,16 @@
     display: flex;
     border: none;
     height: 1.7rem;
-    background-color: var(--brighter-blue);
+    background-color: var(--teal-faded);
     justify-content: center;
     align-items: center;
     cursor: pointer;
     border-radius: 1.5rem;
     font-size: .8rem;
+    border: 1px var(--dark-blue-faded) solid;
 
     &:hover {
-      background: var(--lighter-blue);
+      background: var(--teal);
     }
 
     img {
@@ -117,7 +119,7 @@ app-square {
     margin: .8rem auto 0;
     font-size: 1.5rem;
 
-    animation: winner-msg-animation 2s forwards .2s;
+    animation: winner-msg-animation 1.5s forwards .2s;
   }
 
   .invisible {
@@ -137,18 +139,18 @@ app-square {
     }
 
     .x-icon {
-      background-color: var(--brighter-blue);
+      background-color: var(--blue-faded);
 
       &:hover {
-        background-color: var(--lighter-blue);
+        background-color: var(--blue);
       }
     }
 
     .o-icon {
-      background-color: var(--transparent-purple);
+      background-color: var(--purple-faded);
 
       &:hover {
-        background-color: var(--lighter-purple);
+        background-color: var(--purple);
       }
     }
 
@@ -162,10 +164,10 @@ app-square {
     }
 
     .losing-icon {
-      background-color: rgba(29, 77, 113, 0.55);
+      background-color: var(--loser-faded);;
 
       &:hover {
-        background-color: rgba(29, 77, 113, 0.8);
+        background-color: var(--loser);
       }
     }
 

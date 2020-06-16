@@ -5,14 +5,18 @@ section {
   justify-content: center;
   align-items: center;
   background-color:white;
-  border: 1px solid var(--transparent-blue);
+  border: 1px solid var(--blue-faded);
   font-size: 4rem;
   font-family: Verdana;
-  color: var(--transparent-blue);
+  color: var(--blue);
 
   &:hover {
     cursor: pointer;
   }
+}
+
+.o-class {
+  color: var(--purple);
 }
 
 #square0, #square1, #square2 {
