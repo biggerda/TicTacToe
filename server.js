@@ -27,4 +27,4 @@ const server = http.createServer(app);
 /**
  * Listen on provided port, on all network interfaces.
  */
-server.listen(port, () => console.log(`API running on ${port}`));
+server.listen(port, () => console.log(`Application is running at http://127.0.0.1:${port}`));
